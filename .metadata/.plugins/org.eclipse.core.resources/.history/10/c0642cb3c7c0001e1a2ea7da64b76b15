@@ -1,0 +1,5 @@
+package com.avega.portfolio.user.repository;
+
+public class RoleRepository {
+
+}

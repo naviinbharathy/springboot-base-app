@@ -1,0 +1,5 @@
+package com.avega.portfolio.payload.response;
+
+public class JwtResponse {
+
+}

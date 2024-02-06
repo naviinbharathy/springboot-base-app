@@ -1,0 +1,10 @@
+spring.profiles.active=dev
+#spring.profiles.active=dev,staging,prod
+
+#JPA Configuration
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=none
+
+# App Properties
+portfolio.app.jwtSecret= ======================BezKoder=Spring===========================
+portfolio.app.jwtExpirationMs=86400000
