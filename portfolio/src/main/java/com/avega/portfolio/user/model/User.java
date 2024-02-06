@@ -3,12 +3,13 @@ package com.avega.portfolio.user.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UuidGenerator;
+
+import com.avega.portfolio.model.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -26,11 +27,12 @@ import lombok.Setter;
 		@UniqueConstraint(columnNames = "email") })
 @Getter
 @Setter
-public class User {
+public class User extends BaseEntity {
 
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid")
+//	@GeneratedValue(generator = "uuid")
+//	@GenericGenerator(name = "uuid", strategy = "uuid")
+	@UuidGenerator
 	@Column(name = "user_id")
 	private String userId;
 

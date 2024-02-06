@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "API Doc", version ="1.0",description="MicroServices"))
+@OpenAPIDefinition(info = @Info(title = "API Doc", version = "1.0", description = "Portfolio Application"))
 public class PortfolioApplication {
 
 	public static void main(String[] args) {

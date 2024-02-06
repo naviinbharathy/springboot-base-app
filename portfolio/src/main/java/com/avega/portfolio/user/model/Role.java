@@ -1,50 +1,37 @@
 package com.avega.portfolio.user.model;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UuidGenerator;
 
 import com.avega.portfolio.enums.ERole;
+import com.avega.portfolio.model.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Role extends BaseEntity {
+
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid")
-	private Integer id;
+//	@GeneratedValue(generator = "uuid")
+//	@GenericGenerator(name = "uuid", strategy = "uuid")
+	@UuidGenerator
+	@Column(name = "role_id")
+	private String roleId;
 
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
 	private ERole name;
-
-	public Role() {
-
-	}
-
-	public Role(ERole name) {
-		this.name = name;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public ERole getName() {
-		return name;
-	}
-
-	public void setName(ERole name) {
-		this.name = name;
-	}
 }

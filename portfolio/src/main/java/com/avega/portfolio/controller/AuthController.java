@@ -3,9 +3,7 @@ package com.avega.portfolio.controller;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.avega.portfolio.constants.Constants;
 import com.avega.portfolio.enums.ERole;
 import com.avega.portfolio.exception.TokenRefreshException;
 import com.avega.portfolio.payload.request.LoginRequest;
@@ -38,30 +37,26 @@ import com.avega.portfolio.user.repository.UserRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 
 //@CrossOrigin(origins = "*", maxAge = 3600)
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
+@AllArgsConstructor
 @Tag(name = "AuthController", description = "REST API's Related To Perform Auth Operation !! ")
 public class AuthController {
 
-	@Autowired
 	AuthenticationManager authenticationManager;
 
-	@Autowired
 	UserRepository userRepository;
 
-	@Autowired
 	RoleRepository roleRepository;
 
-	@Autowired
 	PasswordEncoder encoder;
 
-	@Autowired
 	JwtUtils jwtUtils;
 
-	@Autowired
 	RefreshTokenService refreshTokenService;
 
 	@PostMapping("/signin")
@@ -76,8 +71,7 @@ public class AuthController {
 
 		ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
-		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
-				.collect(Collectors.toList());
+		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).toList();
 
 		RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUserId());
 
@@ -107,26 +101,26 @@ public class AuthController {
 
 		if (strRoles == null) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					.orElseThrow(() -> new RuntimeException(Constants.ROLE_NOT_FOUND));
 			roles.add(userRole);
 		} else {
 			strRoles.forEach(role -> {
 				switch (role) {
 				case "admin":
 					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+							.orElseThrow(() -> new RuntimeException(Constants.ROLE_NOT_FOUND));
 					roles.add(adminRole);
 
 					break;
 				case "mod":
 					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+							.orElseThrow(() -> new RuntimeException(Constants.ROLE_NOT_FOUND));
 					roles.add(modRole);
 
 					break;
 				default:
 					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+							.orElseThrow(() -> new RuntimeException(Constants.ROLE_NOT_FOUND));
 					roles.add(userRole);
 				}
 			});
@@ -141,7 +135,7 @@ public class AuthController {
 	@PostMapping("/signout")
 	public ResponseEntity<?> logoutUser() {
 		Object principle = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principle.toString() != "anonymousUser") {
+		if (!"anonymousUser".equals(principle.toString())) {
 			String userId = ((UserDetailsImpl) principle).getUserId();
 			refreshTokenService.deleteByUserId(userId);
 		}
