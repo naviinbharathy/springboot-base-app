@@ -25,8 +25,6 @@ import lombok.Setter;
 public class Role extends BaseEntity {
 
 	@Id
-//	@GeneratedValue(generator = "uuid")
-//	@GenericGenerator(name = "uuid", strategy = "uuid")
 	@UuidGenerator
 	@Column(name = "role_id")
 	private String roleId;

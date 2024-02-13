@@ -3,6 +3,7 @@ package com.avega.portfolio.user.model;
 import java.time.Instant;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,15 +15,15 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 @Entity
 @Table(name = "refresh_token")
 public class RefreshToken {
-	
+
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid")
-	@Column(name="refresh_token_id")
+	@UuidGenerator
+	@Column(name = "refresh_token_id")
 	private String refreshTokenId;
 
 	@OneToOne

@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -43,20 +45,26 @@ import lombok.AllArgsConstructor;
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
-@AllArgsConstructor
+//@AllArgsConstructor
 @Tag(name = "AuthController", description = "REST API's Related To Perform Auth Operation !! ")
 public class AuthController {
 
+	@Autowired
 	AuthenticationManager authenticationManager;
 
+	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
 	RoleRepository roleRepository;
 
+	@Autowired
 	PasswordEncoder encoder;
 
+	@Autowired
 	JwtUtils jwtUtils;
 
+	@Autowired
 	RefreshTokenService refreshTokenService;
 
 	@PostMapping("/signin")

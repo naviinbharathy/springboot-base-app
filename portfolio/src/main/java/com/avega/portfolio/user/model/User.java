@@ -30,8 +30,6 @@ import lombok.Setter;
 public class User extends BaseEntity {
 
 	@Id
-//	@GeneratedValue(generator = "uuid")
-//	@GenericGenerator(name = "uuid", strategy = "uuid")
 	@UuidGenerator
 	@Column(name = "user_id")
 	private String userId;

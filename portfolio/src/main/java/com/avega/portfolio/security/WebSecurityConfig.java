@@ -1,5 +1,6 @@
 package com.avega.portfolio.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,11 +23,13 @@ import lombok.AllArgsConstructor;
 
 @Configuration
 @EnableMethodSecurity
-@AllArgsConstructor
+//@AllArgsConstructor
 public class WebSecurityConfig {
 
+	@Autowired
 	UserDetailsServiceImpl userDetailsService;
 
+	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
 
 	@Bean
@@ -59,11 +62,9 @@ public class WebSecurityConfig {
 				.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(
-						auth -> auth
-						.requestMatchers("/**","/api/auth/**").permitAll()
-						.requestMatchers("/api/test/**").permitAll()
-						.requestMatchers("/apidoc/**", "/swagger-ui/**").permitAll()
-						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated());
+						auth -> auth.requestMatchers("/**", "/api/auth/**").permitAll().requestMatchers("/api/test/**")
+								.permitAll().requestMatchers("/apidoc/**", "/swagger-ui/**").permitAll()
+								.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated());
 
 		http.authenticationProvider(authenticationProvider());
 
