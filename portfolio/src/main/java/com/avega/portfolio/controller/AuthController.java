@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -39,33 +37,37 @@ import com.avega.portfolio.user.repository.UserRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 
 //@CrossOrigin(origins = "*", maxAge = 3600)
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
-//@AllArgsConstructor
 @Tag(name = "AuthController", description = "REST API's Related To Perform Auth Operation !! ")
 public class AuthController {
 
-	@Autowired
 	AuthenticationManager authenticationManager;
 
-	@Autowired
 	UserRepository userRepository;
 
-	@Autowired
 	RoleRepository roleRepository;
 
-	@Autowired
 	PasswordEncoder encoder;
 
-	@Autowired
 	JwtUtils jwtUtils;
 
-	@Autowired
 	RefreshTokenService refreshTokenService;
+
+	public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
+			RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils,
+			RefreshTokenService refreshTokenService) {
+		super();
+		this.authenticationManager = authenticationManager;
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+		this.encoder = encoder;
+		this.jwtUtils = jwtUtils;
+		this.refreshTokenService = refreshTokenService;
+	}
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

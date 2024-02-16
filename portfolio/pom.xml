@@ -129,6 +129,11 @@
 			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<!--
+		Dependencies to add
+		1. Checkstyle
+		2. liquibase / flyway
+		-->
 	</dependencies>
 
 	<build>

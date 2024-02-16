@@ -1,6 +1,5 @@
 package com.avega.portfolio.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,18 +18,19 @@ import com.avega.portfolio.security.jwt.AuthEntryPointJwt;
 import com.avega.portfolio.security.jwt.AuthTokenFilter;
 import com.avega.portfolio.security.services.UserDetailsServiceImpl;
 
-import lombok.AllArgsConstructor;
-
 @Configuration
 @EnableMethodSecurity
-//@AllArgsConstructor
 public class WebSecurityConfig {
 
-	@Autowired
-	UserDetailsServiceImpl userDetailsService;
+	private final UserDetailsServiceImpl userDetailsService;
 
-	@Autowired
-	private AuthEntryPointJwt unauthorizedHandler;
+	private final AuthEntryPointJwt unauthorizedHandler;
+
+	public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, AuthEntryPointJwt unauthorizedHandler) {
+		super();
+		this.userDetailsService = userDetailsService;
+		this.unauthorizedHandler = unauthorizedHandler;
+	}
 
 	@Bean
 	AuthTokenFilter authenticationJwtTokenFilter() {
