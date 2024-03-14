@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.avega.portfolio.constants.Constants;
+import com.avega.portfolio.constants.ExceptionConstants;
 import com.avega.portfolio.enums.ERole;
 import com.avega.portfolio.exception.TokenRefreshException;
 import com.avega.portfolio.payload.request.LoginRequest;
@@ -45,17 +45,17 @@ import jakarta.validation.Valid;
 @Tag(name = "AuthController", description = "REST API's Related To Perform Auth Operation !! ")
 public class AuthController {
 
-	AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
 
-	UserRepository userRepository;
+	private final UserRepository userRepository;
 
-	RoleRepository roleRepository;
+	private final RoleRepository roleRepository;
 
-	PasswordEncoder encoder;
+	private final PasswordEncoder encoder;
 
-	JwtUtils jwtUtils;
+	private final JwtUtils jwtUtils;
 
-	RefreshTokenService refreshTokenService;
+	private final RefreshTokenService refreshTokenService;
 
 	public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
 			RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils,
@@ -111,26 +111,26 @@ public class AuthController {
 
 		if (strRoles == null) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException(Constants.ROLE_NOT_FOUND));
+					.orElseThrow(() -> new RuntimeException(ExceptionConstants.ROLE_NOT_FOUND));
 			roles.add(userRole);
 		} else {
 			strRoles.forEach(role -> {
 				switch (role) {
 				case "admin":
 					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException(Constants.ROLE_NOT_FOUND));
+							.orElseThrow(() -> new RuntimeException(ExceptionConstants.ROLE_NOT_FOUND));
 					roles.add(adminRole);
 
 					break;
 				case "mod":
 					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-							.orElseThrow(() -> new RuntimeException(Constants.ROLE_NOT_FOUND));
+							.orElseThrow(() -> new RuntimeException(ExceptionConstants.ROLE_NOT_FOUND));
 					roles.add(modRole);
 
 					break;
 				default:
 					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException(Constants.ROLE_NOT_FOUND));
+							.orElseThrow(() -> new RuntimeException(ExceptionConstants.ROLE_NOT_FOUND));
 					roles.add(userRole);
 				}
 			});

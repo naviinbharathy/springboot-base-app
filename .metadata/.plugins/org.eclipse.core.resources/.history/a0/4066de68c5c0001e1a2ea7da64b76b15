@@ -1,5 +1,0 @@
-package com.avega.portfolio.security;
-
-public class AuthEntryPointJwt {
-
-}

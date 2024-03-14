@@ -1,5 +1,0 @@
-package com.avega.portfolio.security.services;
-
-public class UserDetailsServiceImpl {
-
-}

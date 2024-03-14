@@ -1,4 +1,0 @@
-server.port=8090
-spring.datasource.url=jdbc:postgresql://localhost:5432/lpms_dec_13
-spring.datasource.username=postgres
-spring.datasource.password=root
